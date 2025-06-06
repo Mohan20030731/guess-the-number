@@ -1,0 +1,177 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #0f0f0f, #1a1a2e);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      main {
+        background-color: #151515;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        text-align: center;
+        width: 350px;
+        animation: fadeIn 1s ease-in-out;
+      }
+
+      h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #00f2ff;
+        text-shadow: 0 0 10px #00f2ff;
+      }
+
+      input[type="number"] {
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        width: 80%;
+        font-size: 16px;
+        margin-bottom: 15px;
+        background: #222;
+        color: #fff;
+        text-align: center;
+        outline: none;
+        transition: 0.3s;
+      }
+
+      input[type="number"]:focus {
+        box-shadow: 0 0 10px #00f2ff;
+      }
+
+      button {
+        padding: 10px 20px;
+        margin: 10px 5px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+        background: #00f2ff;
+        color: #000;
+        font-weight: bold;
+        box-shadow: 0 0 10px #00f2ff;
+      }
+
+      button:hover {
+        background: #00bcd4;
+        box-shadow: 0 0 15px #00f2ff, 0 0 30px #00f2ff;
+        transform: scale(1.05);
+      }
+
+      h3 {
+        margin: 15px 0 5px;
+        color: #fffc;
+      }
+
+      #result {
+        color: #ff0;
+        font-size: 18px;
+        min-height: 24px;
+        transition: all 0.5s;
+      }
+
+      #score {
+        font-size: 24px;
+        font-weight: bold;
+        color: #0f0;
+        animation: popIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes popIn {
+        0% {
+          transform: scale(0.5);
+          opacity: 0.5;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+    </style>
+    <main>
+      <h1>Guess the Number from 1 to 10</h1>
+      <input
+        type="number"
+        id="guess"
+        placeholder="Enter your guess (1-10)"
+        max="10"
+        min="1"
+        required
+      />
+      <button onclick="guessNumber()">Guess</button>
+      <button onclick="resetGame()">Play Again</button>
+      <h3 id="result"></h3>
+      <h3>
+        Your Score:
+        <p id="score"></p>
+      </h3>
+    </main>
+    <script>
+      var number = Math.floor(Math.random() * 10) + 1;
+      console.log(number);
+      var score = 0;
+
+      function guessNumber() {
+        var userGuess = parseInt(document.getElementById("guess").value);
+        if (userGuess < 1 || userGuess > 10 || isNaN(userGuess)) {
+          document.getElementById("result").textContent =
+            "Please enter a number between 1 and 10!";
+          return;
+        }
+
+        if (userGuess === number) {
+          document.getElementById("result").textContent =
+            "You guessed the number correctly!";
+          score += 10;
+          document.getElementById("score").textContent = score;
+          number = Math.floor(Math.random() * 10) + 1;
+          console.log("New number:", number);
+        } else {
+          document.getElementById("result").textContent =
+            "Wrong guess. Try again!";
+          score -= 5;
+          document.getElementById("score").textContent = score;
+        }
+      }
+
+      function resetGame() {
+        number = Math.floor(Math.random() * 10) + 1;
+        console.log("Reset number:", number);
+        score = 0;
+        document.getElementById("result").textContent = "";
+        document.getElementById("guess").value = "";
+        document.getElementById("score").textContent = score;
+      }
+    </script>
+  </body>
+</html>
